@@ -14,7 +14,7 @@ export default function Card({ title, description, image, link }) {
                 
                 {link && (
                     <a href={link} target="_blank" className="card__link" aria-label={`visit ${title}, this will open a new tab`} rel="noopener noreferrer">
-                        Visit {title}
+                        <button className='button-primary'><b>Visit {title}</b></button>
                     </a>
                 )}
             </div>

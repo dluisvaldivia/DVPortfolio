@@ -18,9 +18,9 @@
     }
   
     &__image {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+      max-width: 10rem;
+      max-height: 5rem;
+      align-self: center;
     }
   
     &__content {
