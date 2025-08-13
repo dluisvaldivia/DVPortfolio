@@ -1,0 +1,112 @@
+@use "./variables" as vars;
+
+#floating-total {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  border: 1px solid var(--color-accent);
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+  font-size: 3rem;
+}
+
+
+.tier-button,
+.rate-button {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 2px solid var(--color-accent);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.tier-button.checked,
+.rate-button.checked {
+  background: var(--color-accent); 
+  color: var(--bg-color); 
+  border-color: var(--color-accent); 
+}
+
+.tier-button:not(.checked),
+.rate-button:not(.checked) {
+  background: var(--bg-color); 
+  color: var(--text-color); 
+  border-color: var(--color-accent);
+}
+
+.tier-button:hover,
+.rate-button:hover {
+  background: var(--color-accent); 
+  color: var(--bg-color);
+}
+
+.rate-button.locked {
+  background: var(--color-accent);
+  color: var(--bg-color);
+  border-color: var(--color-accent);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+// General Layout
+.container {
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: var(--text-color);
+}
+
+button {
+  outline: none;
+}
+
+.description-box {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 2px solid var(--color-accent);
+  padding: 15px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.description-box h4 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.description-box p {
+  margin: 0;
+}
+
+.whatsapp-button {
+  padding: 15px 30px;
+  font-size: 1.25rem;
+  border-radius: 8px; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+  background-color: var(--color-accent); 
+  color: var(--bg-color); 
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.whatsapp-button:hover {
+  filter: brightness(1.5);
+  color: var(--bg-color);
+  cursor: pointer;
+}

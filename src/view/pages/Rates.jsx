@@ -1,86 +1,186 @@
 import React, { useState } from 'react';
+import '../../styles/_rates.scss'; // Import the SCSS file
+import whatsappIcon from '../../assets/icons8-whatsapp.svg'; // Import the WhatsApp icon
 
 export default function Rates() {
-    const [basePrice, setBasePrice] = useState(150); // Default base price
-    const [extras, setExtras] = useState([]);
+  const [basePrice, setBasePrice] = useState(150); // Default base price
+  const [extras, setExtras] = useState([]); // Track selected extras
+  const [lockedExtras, setLockedExtras] = useState([]); // Track locked extras
 
-    const extraOptions = [
-        { label: '🌗 Dark/ Light Mode', price: 50 },
-        { label: '🔝 Back to Top Button', price: 20 },
+  const basePackages = [
+    {
+      price: 150,
+      label: '🧱 Basic Site',
+      description: `
+        - Up to 5 pages (e.g., Home, About, Services, Contact)
+        - Mobile-friendly responsive design
+        - Clean, professional layout & typography
+        - Basic SEO setup (titles, meta descriptions)
+        - Contact form with email delivery
+        - Includes stock images or your provided photos
+        - Basic accessibility best practices (alt text, clear contrast)
+      `,
+    },
+    {
+      price: 200,
+      label: '♿ Accessible-Friendly Site',
+      description: `
+    - A fully-featured website with advanced functionality
+    - Integrations for e-commerce, booking, or other services
+    - Comprehensive SEO setup
+    - Custom design tailored to your brand
+    - Advanced accessibility features (WCAG & EAA compliant)
+    - WCAG/EAA-approved label displayed on the site
+    - Helps avoid fines for non-compliance with the European Accessibility Act (EAA)
+    - Learn more about the EAA here: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0882
+  `,
+    },
+    {
+      price: 300,
+      label: '🚀 Full Package',
+      description: `
+        - A fully-featured website with advanced functionality
+        - Integrations for e-commerce, booking, or other services
+        - Comprehensive SEO setup
+        - Custom design tailored to your brand
+        - Advanced accessibility features
+      `,
+    },
+  ];
+
+  const extraOptions = [
+    { label: '🌗 Dark/ Light Mode', price: 50 },
+    { label: '🔝 Back to Top Button', price: 20 },
+    { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
+    { label: '🧾 Cookie Consent Banner', price: 40 },
+    { label: '📃 Legal Pages', price: 30 },
+    { label: '📅 Calendly Integration', price: 30 },
+    { label: '💳 Stripe Setup', price: 60 },
+    { label: '🌍 Multilingual Setup', price: 100 },
+    { label: '📧 Email Setup Help', price: 50 },
+    { label: 'Accessibility Statement', price: 20 },
+  ];
+
+  // Handle selecting a base package
+  const selectBasePackage = (price) => {
+    setBasePrice(price);
+
+    // Reset extras and lock specific ones based on the selected package
+    if (price === 150) {
+      setExtras([]); // Unselect all extras
+      setLockedExtras([]); // No locked extras
+    } else if (price === 200) {
+      setExtras([
         { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
+        { label: 'Accessibility Statement', price: 20 },
+      ]);
+      setLockedExtras([
+        { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
+        { label: 'Accessibility Statement', price: 20 },
+      ]);
+    } else if (price === 300) {
+      const fullPackageExtras = [
+        { label: '📧 Email Setup Help', price: 50 },
         { label: '🧾 Cookie Consent Banner', price: 40 },
         { label: '📃 Legal Pages', price: 30 },
-        { label: '📅 Calendly Integration', price: 30 },
         { label: '💳 Stripe Setup', price: 60 },
-        { label: '🌍 Multilingual Setup', price: 100 },
-        { label: '📧 Email Setup Help', price: 50 },
-        { label: 'Accessibility Statement', price: 20 },
-    ];
+        { label: '🔝 Back to Top Button', price: 20 },
+      ];
+      setExtras(fullPackageExtras);
+      setLockedExtras(fullPackageExtras);
+    }
+  };
 
-    const toggleExtra = (extra) => {
-        setExtras((prevExtras) =>
-            prevExtras.includes(extra)
-                ? prevExtras.filter((e) => e !== extra)
-                : [...prevExtras, extra]
-        );
-    };
+  // Handle toggling extras
+  const toggleExtra = (extra) => {
+    // Prevent toggling locked extras
+    if (lockedExtras.some((e) => e.label === extra.label)) {
+      return;
+    }
 
-    const calculateTotal = () => {
-        const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0);
-        return basePrice + extrasTotal;
-    };
+    setExtras((prevExtras) => {
+      const isSelected = prevExtras.some((e) => e.label === extra.label);
+      if (isSelected) {
+        return prevExtras.filter((e) => e.label !== extra.label);
+      } else {
+        return [...prevExtras, extra];
+      }
+    });
+  };
 
-    return (
-        <div className="container">
-            <div className="row">
-                <div className="col-12 col-md-6 col-lg-8">
-                    <h1>Need a site?</h1>
-                    <h2>Select a Base Package:</h2>
-                    <div className="col">
-                        <button
-                            className={`tier-button my-3 me-3 ${basePrice === 150 ? 'checked' : ''}`}
-                            onClick={() => setBasePrice(150)}
-                        >
-                            🧱 Basic Site
-                        </button>
-                        <button
-                            className={`tier-button my-3 me-3 ${basePrice === 200 ? 'checked' : ''}`}
-                            onClick={() => setBasePrice(200)}
-                        >
-                            ♿ Accessible-Friendly Site
-                        </button>
-                        <button
-                            className={`tier-button my-3 me-3 ${basePrice === 300 ? 'checked' : ''}`}
-                            onClick={() => setBasePrice(300)}
-                        >
-                            🚀 Full Package
-                        </button>
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">Add Extras:</h3>
-                    <div className="col">
-                        {extraOptions.map((extra, index) => (
-                            <button
-                                key={index}
-                                className={`rate-button me-2 mb-2 ${extras.includes(extra) ? 'checked' : ''}`}
-                                onClick={() => toggleExtra(extra)}
-                            >
-                                <span>{`${extra.label} +€${extra.price}`}</span>
-                            </button>
-                        ))}
-                    </div>
-                    <div className="text-end me-5 mt-5" id="total-result">
-                        <strong>Total: €{calculateTotal()}</strong>
-                    </div>
-                    <div className="col mb-5">
-                        <button
-                            className="btn btn-primary"
-                            onClick={() => window.alert('Contact form coming soon!')}
-                        >
-                            Get in contact with me
-                        </button>
-                    </div>
-                </div>
-            </div>
+  // Calculate the total price
+  const calculateTotal = () => {
+    const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0);
+    return basePrice + extrasTotal;
+  };
+
+  // Get the description of the selected base package
+  const selectedPackage = basePackages.find((pkg) => pkg.price === basePrice);
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12 col-md-6 col-lg-8">
+
+          <h1>Need a site?</h1>
+
+          <h3>Select a Base Package:</h3>
+
+          <div className="col">
+            {basePackages.map((pkg) => (
+              <button
+                key={pkg.price}
+                className={`tier-button my-3 me-3 ${basePrice === pkg.price ? 'checked' : ''}`}
+                onClick={() => selectBasePackage(pkg.price)}
+              >
+                {pkg.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Description Box */}
+          <div className="description-box">
+            <h5>Selected Package:</h5>
+            <p>{selectedPackage?.description}</p>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Add Extras:</h3>
+          <div className="col">
+            {extraOptions.map((extra, index) => (
+              <button
+                key={index}
+                className={`rate-button me-2 mb-2 ${
+                  extras.some((e) => e.label === extra.label) ? 'checked' : ''
+                } ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
+                onClick={() => toggleExtra(extra)}
+                disabled={lockedExtras.some((e) => e.label === extra.label)} // Disable locked extras
+              >
+                <span>{`${extra.label} +€${extra.price}`}</span>
+              </button>
+            ))}
+          </div>
+          <div id="floating-total" className="text-end me-5 mt-5">
+            <strong>Total: €{calculateTotal()}</strong>
+          </div>
+          <div className="col mb-5">
+            <button
+              className="btn btn-primary d-flex align-items-center justify-content-center mt-5 whatsapp-button"
+              onClick={() =>
+                window.open(
+                  'https://wa.me/+34615193280?text=Hi%20there!%20I%20would%20like%20to%20get%20in%20contact%20with%20you.',
+                  '_blank'
+                )
+              }
+            >
+              <img
+                src={whatsappIcon}
+                alt="WhatsApp Icon"
+                style={{ width: '32px', height: '32px', marginRight: '15px' }} // Increased icon size
+              />
+              Get in contact with me through WhatsApp
+            </button>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
