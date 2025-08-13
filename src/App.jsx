@@ -4,6 +4,7 @@ import './styles/global.scss'
 import Home from './view/pages/Home.jsx'
 import NotFound from './view/pages/NotFound.jsx'
 import Navbar from './view/components/Navbar.jsx';
+import Rates from './view/pages/Rates.jsx';
 import BackToTop from './view/components/backToTop.jsx';
 import {getInitialTheme, setTheme} from './controllers/themeController.js'
 
@@ -18,6 +19,7 @@ useEffect(() => {setTheme(getInitialTheme())}, []);
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/rates" element={<Rates />} />
       </Routes>
       <BackToTop />
       {/* <Footer /> */}

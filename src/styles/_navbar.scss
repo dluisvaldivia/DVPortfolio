@@ -30,7 +30,22 @@ nav .item {
   height: 60px;
   line-height: 60px;
   text-align: center;
-  }
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: none;
+  transition: 0.35s;
+  text-decoration: none; /* Remove underline for links */
+}
+
+nav .item:hover,
+nav .item:focus {
+  background: var(--color-accent);
+  outline: none;
+}
+
+nav .item:active {
+  color: var(--color-accent);
+}
 
 button {
   background: var(--bg-color);
