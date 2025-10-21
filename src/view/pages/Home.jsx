@@ -50,7 +50,7 @@ export default function Home() {
       <div className='row mt-3 mb-2'>
         <div className='col-md-12 col-sm-6 text-center'>
           <h1>ValdiviaMedia</h1>
-          <h2>Full Stack Developer</h2>
+          <h2>Front-end Developer</h2>
         </div>
       </div>
 
