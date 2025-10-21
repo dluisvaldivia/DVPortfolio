@@ -141,16 +141,24 @@ export default function Rates() {
           {/* Description Box */}
           <div className="description-box">
             <h5>Selected Package:</h5>
-            <p>{selectedPackage?.description}</p>
+            <p>
+              {selectedPackage?.description.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line.trim()}
+                  <br />
+                </React.Fragment>
+              ))}
+            </p>
           </div>
-          <h3 className="text-lg font-semibold mb-2">Add Extras:</h3>
+
+
+          <h3 className="text-lg font-semibold mb-2 mt-4">Add Extras:</h3>
           <div className="col">
             {extraOptions.map((extra, index) => (
               <button
                 key={index}
-                className={`rate-button me-2 mb-2 ${
-                  extras.some((e) => e.label === extra.label) ? 'checked' : ''
-                } ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
+                className={`rate-button me-2 mb-2 ${extras.some((e) => e.label === extra.label) ? 'checked' : ''
+                  } ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
                 onClick={() => toggleExtra(extra)}
                 disabled={lockedExtras.some((e) => e.label === extra.label)} // Disable locked extras
               >
@@ -164,12 +172,18 @@ export default function Rates() {
           <div className="col mb-5">
             <button
               className="btn btn-primary d-flex align-items-center justify-content-center mt-5 whatsapp-button"
-              onClick={() =>
-                window.open(
-                  'https://wa.me/+34615193280?text=Hi%20there!%20I%20would%20like%20to%20get%20in%20contact%20with%20you.',
-                  '_blank'
-                )
-              }
+         onClick={() => {
+  const stripEmojis = (text) => text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
+  const cleanLabel = stripEmojis(selectedPackage.label);
+  const extrasList = extras.map((e) => stripEmojis(e.label)).join(', ') || 'No extras selected';
+  const message = `Hi Danny! I'm interested in your ${cleanLabel}. Selected extras: ${extrasList}. Total price: €${calculateTotal()}.`;
+
+  const whatsappURL = `https://wa.me/34615193280?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, '_blank');
+}}
+
+
+
             >
               <img
                 src={whatsappIcon}
