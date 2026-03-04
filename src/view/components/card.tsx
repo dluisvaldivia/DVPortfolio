@@ -3,23 +3,20 @@
 interface CardProps {
     title: string;
     description: string;
-    image?: string;
     link?: string;
 }
 
-export default function Card({ title, description, image, link }: CardProps) {
+export default function Card({ title, description, link }: CardProps) {
     return (
         <article className="card" tabIndex={0} aria-labelledby={`card-title-${title}`}>
-            {image && <img src={image} alt={`${title} thumbnail`} className="card__image" />}
-
-            <div className="card__content">
+            <div className="card__content flex flex-col h-full">
 
                 <h2 id={`card-title-${title}`} className="card__title">{title}</h2>
 
-                <p className="card__description">{description}</p>
+                <p className="card__description flex-1">{description}</p>
 
                 {link && (
-                    <a href={link} target="_blank" className="card__link" aria-label={`visit ${title}, this will open a new tab`} rel="noopener noreferrer">
+                    <a href={link} target="_blank" className="card__link mt-auto pt-3 inline-block" aria-label={`visit ${title}, this will open a new tab`} rel="noopener noreferrer">
                         <button className='button-primary'><b>Visit {title}</b></button>
                     </a>
                 )}

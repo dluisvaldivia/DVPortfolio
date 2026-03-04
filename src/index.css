@@ -12,11 +12,11 @@
 @layer base {
     :root {
         /* Colors - Light Theme */
-        --bg-color: hsl(90, 50%, 98%);
-        --primary-color: hsl(111, 57%, 71%);
-        --secondary-color: hsl(163, 60%, 71%);
-        --text-color: hsl(98, 58%, 7%);
-        --accent-color: hsl(182, 60%, 62%);
+        --bg-color: hsl(220, 10%, 98%);
+        --primary-color: hsl(220, 10%, 92%);
+        --secondary-color: hsl(220, 10%, 85%);
+        --text-color: hsl(220, 15%, 15%);
+        --accent-color: hsl(38, 92%, 50%);
 
         /* Fonts */
         --font: 'DM Sans', sans-serif;
@@ -24,15 +24,19 @@
 
     [data-theme="dark"] {
         /* Colors - Dark Theme */
-        --bg-color: hsl(96, 45%, 2%);
-        --primary-color: hsl(111, 57%, 29%);
-        --secondary-color: hsl(163, 59%, 29%);
-        --text-color: hsl(100, 60%, 93%);
-        --accent-color: hsl(182, 60%, 38%);
+        --bg-color: hsl(224, 14%, 10%);
+        --primary-color: hsl(224, 14%, 16%);
+        --secondary-color: hsl(224, 14%, 25%);
+        --text-color: hsl(220, 10%, 95%);
+        --accent-color: hsl(38, 92%, 50%);
     }
 
     body {
-        @apply bg-bg text-text font-sans transition-colors duration-300 m-0 min-h-screen grid place-items-center;
+        @apply bg-bg text-text font-sans transition-colors duration-300 m-0 min-h-screen flex flex-col;
+    }
+
+    #root {
+        @apply w-full flex-grow flex flex-col;
     }
 
     h1,
@@ -86,7 +90,7 @@
 
     /* Navbar Styles */
     .nav-item {
-        @apply relative flex-1 h-[60px] leading-[60px] text-center bg-bg text-text border-none no-underline transition-all duration-300 px-5 z-[5] inline-block text-base;
+        @apply relative flex-1 h-[60px] flex items-center justify-center bg-bg text-text border-none no-underline transition-all duration-300 px-5 z-[5] text-base cursor-pointer;
     }
 
     .nav-item:hover,

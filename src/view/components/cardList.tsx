@@ -10,7 +10,6 @@ const CardsList = () => {
           key={card.id}
           title={card.title}
           description={card.description}
-          image={card.image}
           link={card.link}
         />
       ))}

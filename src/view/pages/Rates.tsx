@@ -125,7 +125,7 @@ export default function Rates() {
 
           <h3>Select a Base Package:</h3>
 
-          <div className="flex flex-col">
+          <div className="flex flex-row flex-wrap gap-3">
             {basePackages.map((pkg) => (
               <button
                 key={pkg.price}
