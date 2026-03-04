@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+@theme {
+    --color-bg: var(--bg-color);
+    --color-primary: var(--primary-color);
+    --color-secondary: var(--secondary-color);
+    --color-text: var(--text-color);
+    --color-accent: var(--accent-color);
+    --font-sans: var(--font), sans-serif;
+}
+
+@layer base {
+    :root {
+        /* Colors - Light Theme */
+        --bg-color: hsl(90, 50%, 98%);
+        --primary-color: hsl(111, 57%, 71%);
+        --secondary-color: hsl(163, 60%, 71%);
+        --text-color: hsl(98, 58%, 7%);
+        --accent-color: hsl(182, 60%, 62%);
+
+        /* Fonts */
+        --font: 'DM Sans', sans-serif;
+    }
+
+    [data-theme="dark"] {
+        /* Colors - Dark Theme */
+        --bg-color: hsl(96, 45%, 2%);
+        --primary-color: hsl(111, 57%, 29%);
+        --secondary-color: hsl(163, 59%, 29%);
+        --text-color: hsl(100, 60%, 93%);
+        --accent-color: hsl(182, 60%, 38%);
+    }
+
+    body {
+        @apply bg-bg text-text font-sans transition-colors duration-300 m-0 min-h-screen grid place-items-center;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        @apply font-bold font-sans;
+    }
+
+    /* Responsive Typography */
+    h1 {
+        @apply text-[2.5rem] md:text-[5rem] xl:text-[7.595rem];
+    }
+
+    h2 {
+        @apply text-[2rem] md:text-[4rem] xl:text-[5.063rem];
+    }
+
+    h3 {
+        @apply text-[1.75rem] md:text-[3rem] xl:text-[3.375rem];
+    }
+
+    h4 {
+        @apply text-[1.5rem] md:text-[2.5rem] xl:text-[2.25rem];
+    }
+
+    h5 {
+        @apply text-[1.25rem] md:text-[2.5rem] xl:text-[1.5rem];
+    }
+
+    small {
+        @apply text-[0.667rem];
+    }
+}
+
+@layer components {
+    .button-primary {
+        @apply text-text bg-secondary border-none rounded px-4 py-2 text-base;
+        min-height: 3rem;
+    }
+
+    .button-primary:hover,
+    .button-primary:focus {
+        @apply bg-accent outline-4 outline-accent outline;
+    }
+
+    .button-primary:active {
+        @apply bg-accent outline-4 outline-accent outline outline-offset-4;
+    }
+
+    /* Navbar Styles */
+    .nav-item {
+        @apply relative flex-1 h-[60px] leading-[60px] text-center bg-bg text-text border-none no-underline transition-all duration-300 px-5 z-[5] inline-block text-base;
+    }
+
+    .nav-item:hover,
+    .nav-item:focus {
+        @apply bg-accent outline-none;
+    }
+
+    .nav-item:active {
+        @apply text-accent;
+    }
+
+    .dropdown {
+        @apply relative inline-block cursor-pointer;
+    }
+
+    .dropdown-content {
+        @apply hidden absolute bg-bg min-w-[160px] shadow-lg z-10 top-full left-0;
+    }
+
+    .dropdown:hover .dropdown-content {
+        @apply block;
+    }
+
+    .dropdown-link {
+        @apply text-text py-3 px-4 block text-left no-underline;
+    }
+
+    .dropdown-link:hover {
+        @apply bg-accent;
+    }
+
+    /* Card Styles */
+    .card {
+        @apply flex flex-col bg-primary rounded-lg overflow-hidden transition-transform duration-200 shadow-md max-w-[98%];
+    }
+
+    .card:hover {
+        @apply scale-105;
+    }
+
+    .card:focus-within {
+        @apply outline-2 outline-secondary outline scale-[1.02];
+    }
+
+    .card__image {
+        @apply max-w-[10rem] max-h-[5rem] self-center;
+    }
+
+    .card__content {
+        @apply flex flex-col flex-grow p-4;
+    }
+
+    .card__title {
+        @apply text-xl m-0 text-text;
+    }
+
+    .card__description {
+        @apply text-base text-text;
+    }
+
+    .card__link {
+        @apply inline-block mt-auto text-accent no-underline;
+    }
+
+    .card__link:focus,
+    .card__link:hover {
+        @apply underline;
+    }
+
+    /* CardList Styles */
+    .cards-container {
+        @apply grid gap-4 p-8;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    /* BackToTop Styles */
+    .back-to-top {
+        @apply fixed bottom-5 right-5 w-[50px] h-[50px] bg-accent text-secondary border-none rounded-full text-2xl font-bold flex items-center justify-center cursor-pointer opacity-0 invisible transition-all duration-300;
+    }
+
+    .back-to-top.show {
+        @apply opacity-100 visible translate-y-0;
+    }
+
+    .back-to-top:hover {
+        @apply bg-primary;
+    }
+
+    /* Rates Page Styles */
+    #floating-total {
+        @apply fixed bottom-5 right-5 bg-bg text-text px-5 py-2.5 border border-accent rounded-md shadow-lg transition-all duration-300 z-[1000] text-5xl;
+    }
+
+    .tier-button,
+    .rate-button {
+        @apply bg-bg text-text border-2 border-accent px-5 py-2.5 rounded-md text-base font-bold cursor-pointer transition-all duration-300;
+    }
+
+    .tier-button.checked,
+    .rate-button.checked {
+        @apply bg-accent text-bg border-accent;
+    }
+
+    .tier-button:not(.checked),
+    .rate-button:not(.checked) {
+        @apply bg-bg text-text border-accent;
+    }
+
+    .tier-button:hover,
+    .rate-button:hover {
+        @apply bg-accent text-bg;
+    }
+
+    .rate-button.locked {
+        @apply bg-accent text-bg border-accent cursor-not-allowed opacity-70;
+    }
+
+    .rates-container {
+        @apply p-5;
+    }
+
+    .description-box {
+        @apply bg-bg text-text border-2 border-accent px-5 py-4 rounded-md mt-5 text-base shadow-md;
+    }
+
+    .description-box h4 {
+        @apply mb-2.5 font-bold text-accent;
+    }
+
+    .description-box p {
+        @apply m-0;
+    }
+
+    .whatsapp-button {
+        @apply px-8 py-4 text-xl rounded-lg inline-flex items-center justify-center gap-2.5 bg-accent text-bg border-none transition-all duration-300;
+    }
+
+    .whatsapp-button:hover {
+        @apply brightness-150 text-bg cursor-pointer;
+    }
+
+    /* Accessibility Checker Styles */
+    .accessibility-checker-container {
+        @apply p-8 max-w-[800px] mx-auto text-center min-h-[80vh] pt-[100px];
+    }
+
+    .accessibility-checker-container h1 {
+        @apply mb-8 text-text;
+    }
+
+    .ac-input-group {
+        @apply flex gap-4 justify-center mb-8;
+    }
+
+    .ac-input-group input {
+        @apply p-2 text-base w-[300px] rounded-md border border-[#ccc];
+    }
+
+    .ac-error-message {
+        @apply text-[#ff4d4d] bg-[#ff4d4d]/10 p-4 rounded-md mb-8;
+    }
+
+    .ac-summary-cards {
+        @apply grid gap-4 mt-8;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .ac-card {
+        @apply p-6 rounded-lg bg-bg border border-text;
+    }
+
+    .ac-card.error h4 {
+        @apply text-[#ff4d4d];
+    }
+
+    .ac-card.alert h4 {
+        @apply text-[#ffa500];
+    }
+
+    .ac-card.contrast h4 {
+        @apply text-[#555];
+    }
+
+    .ac-card p {
+        @apply text-2xl font-bold mt-2 m-0;
+    }
+
+    .ac-detailed-json {
+        @apply mt-8 text-left bg-[#f4f4f4] text-[#333] p-4 rounded-md overflow-x-auto;
+    }
+}
