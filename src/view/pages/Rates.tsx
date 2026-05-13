@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import whatsappIcon from '../../assets/icons8-whatsapp.svg';
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] as any },
+  }),
+};
+
 export default function Rates() {
-  const [basePrice, setBasePrice] = useState(150); // Default base price
-  const [extras, setExtras] = useState<any[]>([]); // Track selected extras
-  const [lockedExtras, setLockedExtras] = useState<any[]>([]); // Track locked extras
+  const [selectedId, setSelectedId] = useState('basic');
+  const [extras, setExtras] = useState<any[]>([]);
+  const [lockedExtras, setLockedExtras] = useState<any[]>([]);
 
   const basePackages = [
     {
-      price: 150,
+      id: 'basic',
+      price: 250,
       label: '🧱 Basic Site',
       description: `
         - Up to 5 pages (e.g., Home, About, Services, Contact)
@@ -21,7 +31,8 @@ export default function Rates() {
       `,
     },
     {
-      price: 200,
+      id: 'accessible',
+      price: 250,
       label: '♿ Accessible-Friendly Site',
       description: `
     - A fully-featured website with advanced functionality
@@ -35,6 +46,7 @@ export default function Rates() {
   `,
     },
     {
+      id: 'full',
       price: 300,
       label: '🚀 Full Package',
       description: `
@@ -60,15 +72,12 @@ export default function Rates() {
     { label: 'Accessibility Statement', price: 20 },
   ];
 
-  // Handle selecting a base package
-  const selectBasePackage = (price: number) => {
-    setBasePrice(price);
-
-    // Reset extras and lock specific ones based on the selected package
-    if (price === 150) {
-      setExtras([]); // Unselect all extras
-      setLockedExtras([]); // No locked extras
-    } else if (price === 200) {
+  const selectBasePackage = (id: string) => {
+    setSelectedId(id);
+    if (id === 'basic') {
+      setExtras([]);
+      setLockedExtras([]);
+    } else if (id === 'accessible') {
       setExtras([
         { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
         { label: 'Accessibility Statement', price: 20 },
@@ -77,7 +86,7 @@ export default function Rates() {
         { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
         { label: 'Accessibility Statement', price: 20 },
       ]);
-    } else if (price === 300) {
+    } else if (id === 'full') {
       const fullPackageExtras = [
         { label: '📧 Email Setup Help', price: 50 },
         { label: '🧾 Cookie Consent Banner', price: 40 },
@@ -90,108 +99,135 @@ export default function Rates() {
     }
   };
 
-  // Handle toggling extras
   const toggleExtra = (extra: any) => {
-    // Prevent toggling locked extras
-    if (lockedExtras.some((e) => e.label === extra.label)) {
-      return;
-    }
-
+    if (lockedExtras.some((e) => e.label === extra.label)) return;
     setExtras((prevExtras) => {
       const isSelected = prevExtras.some((e) => e.label === extra.label);
-      if (isSelected) {
-        return prevExtras.filter((e) => e.label !== extra.label);
-      } else {
-        return [...prevExtras, extra];
-      }
+      return isSelected
+        ? prevExtras.filter((e) => e.label !== extra.label)
+        : [...prevExtras, extra];
     });
   };
 
-  // Calculate the total price
-  const calculateTotal = () => {
-    const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0);
-    return basePrice + extrasTotal;
-  };
-
-  // Get the description of the selected base package
-  const selectedPackage = basePackages.find((pkg) => pkg.price === basePrice);
+  const selectedPackage = basePackages.find((pkg) => pkg.id === selectedId);
+  const calculateTotal = () => extras.reduce((sum, extra) => sum + extra.price, 0) + (selectedPackage?.price ?? 0);
 
   return (
-    <div className="rates-container">
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 lg:w-2/3 mx-auto">
+    <div style={{ position: 'relative', zIndex: 1 }}>
+      {/* Ambient glow */}
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: -1,
+          background: 'radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,103,79,0.07) 0%, transparent 70%), radial-gradient(ellipse 50% 35% at 20% 80%, rgba(34,34,247,0.06) 0%, transparent 70%)',
+        }}
+      />
 
-          <h1>Need a site?</h1>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        className="px-4 md:px-8 py-8 mx-auto w-full max-w-[900px]"
+      >
+        <motion.h1
+          variants={fadeUp}
+          custom={0}
+          className="gradient-text font-black tracking-tight text-center"
+          style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.1, marginBottom: '0.5rem' }}
+        >
+          Need a site?
+        </motion.h1>
+        <div className="shimmer-line mb-10" />
 
-          <h3>Select a Base Package:</h3>
+        <motion.h3
+          variants={fadeUp}
+          custom={1}
+          className="text-white mb-4"
+          style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}
+        >
+          Select a Base Package
+        </motion.h3>
 
-          <div className="flex flex-row flex-wrap gap-3">
-            {basePackages.map((pkg) => (
-              <button
-                key={pkg.price}
-                className={`tier-button my-3 me-3 ${basePrice === pkg.price ? 'checked' : ''}`}
-                onClick={() => selectBasePackage(pkg.price)}
-              >
-                {pkg.label}
-              </button>
+        <motion.div variants={fadeUp} custom={2} className="flex flex-row flex-wrap gap-3 mb-6">
+          {basePackages.map((pkg) => (
+            <button
+              key={pkg.id}
+              className={`tier-button my-2 ${selectedId === pkg.id ? 'checked' : ''}`}
+              onClick={() => selectBasePackage(pkg.id)}
+            >
+              {pkg.label}
+            </button>
+          ))}
+        </motion.div>
+
+        <motion.div variants={fadeUp} custom={3} className="description-box mb-8">
+          <h5>Selected Package:</h5>
+          <p>
+            {selectedPackage?.description.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line.trim()}
+                <br />
+              </React.Fragment>
             ))}
-          </div>
+          </p>
+        </motion.div>
 
-          {/* Description Box */}
-          <div className="description-box">
-            <h5>Selected Package:</h5>
-            <p>
-              {selectedPackage?.description.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line.trim()}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
-          </div>
-
-
-          <h3 className="text-xl font-semibold mb-2 mt-4">Add Extras:</h3>
-          <div className="flex flex-wrap">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="mb-8"
+        >
+          <motion.h3
+            variants={fadeUp}
+            custom={0}
+            className="text-white mb-4"
+            style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}
+          >
+            Add Extras
+          </motion.h3>
+          <div className="shimmer-line mb-5" />
+          <motion.div variants={fadeUp} custom={1} className="flex flex-wrap gap-2">
             {extraOptions.map((extra, index) => (
               <button
                 key={index}
-                className={`rate-button mr-2 mb-2 ${extras.some((e) => e.label === extra.label) ? 'checked' : ''
-                  } ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
+                className={`rate-button ${extras.some((e) => e.label === extra.label) ? 'checked' : ''} ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
                 onClick={() => toggleExtra(extra)}
-                disabled={lockedExtras.some((e) => e.label === extra.label)} // Disable locked extras
+                disabled={lockedExtras.some((e) => e.label === extra.label)}
               >
                 <span>{`${extra.label} +€${extra.price}`}</span>
               </button>
             ))}
-          </div>
-          <div id="floating-total" className="text-right mr-5 mt-5">
-            <strong>Total: €{calculateTotal()}</strong>
-          </div>
-          <div className="flex flex-col mb-5">
-            <button
-              className="whatsapp-button mt-5"
-              onClick={() => {
-                // @ts-ignore
-                const stripEmojis = (text) => text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
-                const cleanLabel = selectedPackage ? stripEmojis(selectedPackage.label) : '';
-                const extrasList = extras.map((e) => stripEmojis(e.label)).join(', ') || 'No extras selected';
-                const message = `Hi Danny! I'm interested in your ${cleanLabel}. Selected extras: ${extrasList}. Total price: €${calculateTotal()}.`;
+          </motion.div>
+        </motion.section>
 
-                const whatsappURL = `https://wa.me/34615193280?text=${encodeURIComponent(message)}`;
-                window.open(whatsappURL, '_blank');
-              }}
-            >
-              <img
-                src={whatsappIcon}
-                alt="WhatsApp Icon"
-                style={{ width: '32px', height: '32px', marginRight: '15px' }} // Increased icon size
-              />
-              Get in contact with me through WhatsApp
-            </button>
-          </div>
+        <div id="floating-total" className="text-right mr-5 mt-5">
+          <strong>Total: €{calculateTotal()}</strong>
         </div>
-      </div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          custom={0}
+          className="flex flex-col items-center mt-8 mb-10"
+        >
+          <button
+            className="whatsapp-button"
+            onClick={() => {
+              // @ts-ignore
+              const stripEmojis = (text) => text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
+              const cleanLabel = selectedPackage ? stripEmojis(selectedPackage.label) : '';
+              const extrasList = extras.map((e) => stripEmojis(e.label)).join(', ') || 'No extras selected';
+              const message = `Hi Danny! I'm interested in your ${cleanLabel}. Selected extras: ${extrasList}. Total price: €${calculateTotal()}.`;
+              window.open(`https://wa.me/34615193280?text=${encodeURIComponent(message)}`, '_blank');
+            }}
+          >
+            <img src={whatsappIcon} alt="WhatsApp Icon" style={{ width: '32px', height: '32px', marginRight: '15px' }} />
+            Get in contact with me through WhatsApp
+          </button>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

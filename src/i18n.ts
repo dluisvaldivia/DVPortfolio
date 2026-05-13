@@ -9,6 +9,7 @@ const resources = {
             "nav": {
                 "projects": "Projects",
                 "contact": "Contact",
+                "tools": "Tools",
                 "accessibility_check": "Accessibility Check",
                 "rates": "Rates"
             },
@@ -28,6 +29,11 @@ const resources = {
             "headings": {
                 "projects": "Projects",
                 "contact": "Contact me"
+            },
+            "accessibility_checker": {
+                "title": "Accessibility Checker",
+                "description": "Every website should be usable by everyone — including people who are blind, have low vision, motor difficulties, or rely on a keyboard instead of a mouse. Accessibility issues are often invisible to sighted users, but they can make a site completely unusable for others. This tool scans any public website and shows you exactly what might be blocking people from using it, in plain English — no technical knowledge needed.",
+                "why_matters": "Why does it matter? Aside from being the right thing to do, accessibility is now a legal requirement in many countries under laws like the European Accessibility Act (EAA) and the ADA. Fixing these issues improves the experience for all your users, not just those with disabilities."
             }
         }
     },
@@ -36,6 +42,7 @@ const resources = {
             "nav": {
                 "projects": "Proyectos",
                 "contact": "Contacto",
+                "tools": "Herramientas",
                 "accessibility_check": "Revisión de Accesibilidad",
                 "rates": "Tarifas"
             },
@@ -55,6 +62,11 @@ const resources = {
             "headings": {
                 "projects": "Proyectos",
                 "contact": "Contáctame"
+            },
+            "accessibility_checker": {
+                "title": "Comprobador de Accesibilidad",
+                "description": "Cualquier sitio web debería poder usarlo cualquier persona — incluyendo personas ciegas, con baja visión, dificultades motoras, o que usan el teclado en lugar del ratón. Los problemas de accesibilidad suelen ser invisibles para los usuarios videntes, pero pueden hacer que un sitio sea completamente inutilizable para otros. Esta herramienta analiza cualquier sitio web público y te muestra exactamente qué podría estar impidiendo que la gente lo use, en un lenguaje sencillo — sin necesidad de conocimientos técnicos.",
+                "why_matters": "¿Por qué es importante? Además de ser lo correcto, la accesibilidad es ahora un requisito legal en muchos países bajo leyes como la Ley Europea de Accesibilidad (EAA) y la ADA. Corregir estos problemas mejora la experiencia para todos tus usuarios, no solo para los que tienen discapacidades."
             }
         }
     }

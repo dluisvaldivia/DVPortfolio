@@ -14,7 +14,7 @@ function App() {
 
 
   return (
-    <Router basename="/">
+    <Router basename={import.meta.env.BASE_URL}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
