@@ -34,6 +34,35 @@ const resources = {
                 "title": "Accessibility Checker",
                 "description": "Every website should be usable by everyone — including people who are blind, have low vision, motor difficulties, or rely on a keyboard instead of a mouse. Accessibility issues are often invisible to sighted users, but they can make a site completely unusable for others. This tool scans any public website and shows you exactly what might be blocking people from using it, in plain English — no technical knowledge needed.",
                 "why_matters": "Why does it matter? Aside from being the right thing to do, accessibility is now a legal requirement in many countries under laws like the European Accessibility Act (EAA) and the ADA. Fixing these issues improves the experience for all your users, not just those with disabilities."
+            },
+            "rates": {
+                "heading": "Need a site?",
+                "select_package": "Select a Base Package",
+                "selected_package": "Selected Package:",
+                "add_extras": "Add Extras",
+                "whatsapp_cta": "Get in contact with me through WhatsApp",
+                "packages": {
+                    "basic_label": "🧱 Basic Site",
+                    "basic_desc": "- Up to 5 pages (e.g., Home, About, Services, Contact)\n- Mobile-friendly responsive design\n- Clean, professional layout & typography\n- Basic SEO setup (titles, meta descriptions)\n- Contact form with email delivery\n- Includes stock images or your provided photos\n- Basic accessibility best practices (alt text, clear contrast)",
+                    "accessible_label": "♿ Accessible-Friendly Site",
+                    "accessible_desc": "- A fully-featured website with advanced functionality\n- Integrations for e-commerce, booking, or other services\n- Comprehensive SEO setup\n- Custom design tailored to your brand\n- Advanced accessibility features (WCAG & EAA compliant)\n- WCAG/EAA-approved label displayed on the site\n- Helps avoid fines for non-compliance with the European Accessibility Act (EAA)",
+                    "full_label": "🚀 Full Package",
+                    "full_desc": "- A fully-featured website with advanced functionality\n- Integrations for e-commerce, booking, or other services\n- Comprehensive SEO setup\n- Custom design tailored to your brand\n- Advanced accessibility features"
+                },
+                "extras": {
+                    "dark_mode": "🌗 Dark/Light Mode",
+                    "back_to_top": "🔝 Back to Top Button",
+                    "wcag_audit": "🧑‍🦯 WCAG Deep Audit",
+                    "cookie_banner": "🧾 Cookie Consent Banner",
+                    "legal_pages": "📃 Legal Pages",
+                    "calendly": "📅 Calendly Integration",
+                    "stripe": "💳 Stripe Setup",
+                    "multilingual": "🌍 Multilingual Setup",
+                    "email_setup": "📧 Email Setup Help",
+                    "a11y_statement": "Accessibility Statement"
+                },
+                "whatsapp_message": "Hi Danny! I'm interested in your {{package}}. Selected extras: {{extras}}. Total price: €{{total}}.",
+                "no_extras": "No extras selected"
             }
         }
     },
@@ -67,6 +96,35 @@ const resources = {
                 "title": "Comprobador de Accesibilidad",
                 "description": "Cualquier sitio web debería poder usarlo cualquier persona — incluyendo personas ciegas, con baja visión, dificultades motoras, o que usan el teclado en lugar del ratón. Los problemas de accesibilidad suelen ser invisibles para los usuarios videntes, pero pueden hacer que un sitio sea completamente inutilizable para otros. Esta herramienta analiza cualquier sitio web público y te muestra exactamente qué podría estar impidiendo que la gente lo use, en un lenguaje sencillo — sin necesidad de conocimientos técnicos.",
                 "why_matters": "¿Por qué es importante? Además de ser lo correcto, la accesibilidad es ahora un requisito legal en muchos países bajo leyes como la Ley Europea de Accesibilidad (EAA) y la ADA. Corregir estos problemas mejora la experiencia para todos tus usuarios, no solo para los que tienen discapacidades."
+            },
+            "rates": {
+                "heading": "¿Necesitas un sitio web?",
+                "select_package": "Selecciona un paquete base",
+                "selected_package": "Paquete seleccionado:",
+                "add_extras": "Añadir extras",
+                "whatsapp_cta": "Contáctame por WhatsApp",
+                "packages": {
+                    "basic_label": "🧱 Sitio Básico",
+                    "basic_desc": "- Hasta 5 páginas (p. ej., Inicio, Sobre mí, Servicios, Contacto)\n- Diseño responsive adaptado a móviles\n- Maquetación limpia y tipografía profesional\n- SEO básico (títulos, meta descripciones)\n- Formulario de contacto con entrega por correo\n- Incluye imágenes de stock o tus propias fotos\n- Buenas prácticas básicas de accesibilidad (texto alternativo, contraste adecuado)",
+                    "accessible_label": "♿ Sitio Accesible",
+                    "accessible_desc": "- Sitio web completo con funcionalidad avanzada\n- Integraciones para e-commerce, reservas u otros servicios\n- SEO completo\n- Diseño personalizado adaptado a tu marca\n- Funciones avanzadas de accesibilidad (cumplimiento WCAG y EAA)\n- Sello WCAG/EAA visible en el sitio\n- Ayuda a evitar multas por incumplimiento de la Ley Europea de Accesibilidad (EAA)",
+                    "full_label": "🚀 Paquete Completo",
+                    "full_desc": "- Sitio web completo con funcionalidad avanzada\n- Integraciones para e-commerce, reservas u otros servicios\n- SEO completo\n- Diseño personalizado adaptado a tu marca\n- Funciones avanzadas de accesibilidad"
+                },
+                "extras": {
+                    "dark_mode": "🌗 Modo Oscuro/Claro",
+                    "back_to_top": "🔝 Botón Volver Arriba",
+                    "wcag_audit": "🧑‍🦯 Auditoría WCAG Profunda",
+                    "cookie_banner": "🧾 Banner de Cookies",
+                    "legal_pages": "📃 Páginas Legales",
+                    "calendly": "📅 Integración con Calendly",
+                    "stripe": "💳 Configuración de Stripe",
+                    "multilingual": "🌍 Configuración Multilingüe",
+                    "email_setup": "📧 Configuración de Correo",
+                    "a11y_statement": "Declaración de Accesibilidad"
+                },
+                "whatsapp_message": "¡Hola Danny! Estoy interesado/a en tu {{package}}. Extras seleccionados: {{extras}}. Precio total: €{{total}}.",
+                "no_extras": "Sin extras seleccionados"
             }
         }
     }

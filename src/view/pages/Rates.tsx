@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import whatsappIcon from '../../assets/icons8-whatsapp.svg';
 
 const fadeUp = {
@@ -11,65 +12,28 @@ const fadeUp = {
 };
 
 export default function Rates() {
+  const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState('basic');
   const [extras, setExtras] = useState<any[]>([]);
   const [lockedExtras, setLockedExtras] = useState<any[]>([]);
 
   const basePackages = [
-    {
-      id: 'basic',
-      price: 250,
-      label: '🧱 Basic Site',
-      description: `
-        - Up to 5 pages (e.g., Home, About, Services, Contact)
-        - Mobile-friendly responsive design
-        - Clean, professional layout & typography
-        - Basic SEO setup (titles, meta descriptions)
-        - Contact form with email delivery
-        - Includes stock images or your provided photos
-        - Basic accessibility best practices (alt text, clear contrast)
-      `,
-    },
-    {
-      id: 'accessible',
-      price: 250,
-      label: '♿ Accessible-Friendly Site',
-      description: `
-    - A fully-featured website with advanced functionality
-    - Integrations for e-commerce, booking, or other services
-    - Comprehensive SEO setup
-    - Custom design tailored to your brand
-    - Advanced accessibility features (WCAG & EAA compliant)
-    - WCAG/EAA-approved label displayed on the site
-    - Helps avoid fines for non-compliance with the European Accessibility Act (EAA)
-    - Learn more about the EAA here: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0882
-  `,
-    },
-    {
-      id: 'full',
-      price: 300,
-      label: '🚀 Full Package',
-      description: `
-        - A fully-featured website with advanced functionality
-        - Integrations for e-commerce, booking, or other services
-        - Comprehensive SEO setup
-        - Custom design tailored to your brand
-        - Advanced accessibility features
-      `,
-    },
+    { id: 'basic',      price: 250, labelKey: 'rates.packages.basic_label',      descKey: 'rates.packages.basic_desc' },
+    { id: 'accessible', price: 250, labelKey: 'rates.packages.accessible_label', descKey: 'rates.packages.accessible_desc' },
+    { id: 'full',       price: 300, labelKey: 'rates.packages.full_label',        descKey: 'rates.packages.full_desc' },
   ];
 
   const extraOptions = [
-    { label: '🌗 Dark/ Light Mode', price: 50 },
-    { label: '🔝 Back to Top Button', price: 20 },
-    { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
-    { label: '🧾 Cookie Consent Banner', price: 40 },
-    { label: '📃 Legal Pages', price: 30 },
-    { label: '📅 Calendly Integration', price: 30 },
-    { label: '💳 Stripe Setup', price: 60 },
-    { label: '🌍 Multilingual Setup', price: 100 },
-    { label: '📧 Email Setup Help', price: 50 },
-    { label: 'Accessibility Statement', price: 20 },
+    { key: 'dark_mode',      price: 50  },
+    { key: 'back_to_top',    price: 20  },
+    { key: 'wcag_audit',     price: 80  },
+    { key: 'cookie_banner',  price: 40  },
+    { key: 'legal_pages',    price: 30  },
+    { key: 'calendly',       price: 30  },
+    { key: 'stripe',         price: 60  },
+    { key: 'multilingual',   price: 100 },
+    { key: 'email_setup',    price: 50  },
+    { key: 'a11y_statement', price: 20  },
   ];
 
   const selectBasePackage = (id: string) => {
@@ -78,33 +42,31 @@ export default function Rates() {
       setExtras([]);
       setLockedExtras([]);
     } else if (id === 'accessible') {
-      setExtras([
-        { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
-        { label: 'Accessibility Statement', price: 20 },
-      ]);
-      setLockedExtras([
-        { label: '🧑‍🦯 WCAG Deep Audit', price: 80 },
-        { label: 'Accessibility Statement', price: 20 },
-      ]);
-    } else if (id === 'full') {
-      const fullPackageExtras = [
-        { label: '📧 Email Setup Help', price: 50 },
-        { label: '🧾 Cookie Consent Banner', price: 40 },
-        { label: '📃 Legal Pages', price: 30 },
-        { label: '💳 Stripe Setup', price: 60 },
-        { label: '🔝 Back to Top Button', price: 20 },
+      const locked = [
+        { key: 'wcag_audit',     price: 80 },
+        { key: 'a11y_statement', price: 20 },
       ];
-      setExtras(fullPackageExtras);
-      setLockedExtras(fullPackageExtras);
+      setExtras(locked);
+      setLockedExtras(locked);
+    } else if (id === 'full') {
+      const locked = [
+        { key: 'email_setup',   price: 50 },
+        { key: 'cookie_banner', price: 40 },
+        { key: 'legal_pages',   price: 30 },
+        { key: 'stripe',        price: 60 },
+        { key: 'back_to_top',   price: 20 },
+      ];
+      setExtras(locked);
+      setLockedExtras(locked);
     }
   };
 
   const toggleExtra = (extra: any) => {
-    if (lockedExtras.some((e) => e.label === extra.label)) return;
+    if (lockedExtras.some((e) => e.key === extra.key)) return;
     setExtras((prevExtras) => {
-      const isSelected = prevExtras.some((e) => e.label === extra.label);
+      const isSelected = prevExtras.some((e) => e.key === extra.key);
       return isSelected
-        ? prevExtras.filter((e) => e.label !== extra.label)
+        ? prevExtras.filter((e) => e.key !== extra.key)
         : [...prevExtras, extra];
     });
   };
@@ -134,7 +96,7 @@ export default function Rates() {
           className="gradient-text font-black tracking-tight text-center"
           style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.1, marginBottom: '0.5rem' }}
         >
-          Need a site?
+          {t('rates.heading')}
         </motion.h1>
         <div className="shimmer-line mb-10" />
 
@@ -144,7 +106,7 @@ export default function Rates() {
           className="text-white mb-4"
           style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}
         >
-          Select a Base Package
+          {t('rates.select_package')}
         </motion.h3>
 
         <motion.div variants={fadeUp} custom={2} className="flex flex-row flex-wrap gap-3 mb-6">
@@ -154,15 +116,15 @@ export default function Rates() {
               className={`tier-button my-2 ${selectedId === pkg.id ? 'checked' : ''}`}
               onClick={() => selectBasePackage(pkg.id)}
             >
-              {pkg.label}
+              {t(pkg.labelKey)}
             </button>
           ))}
         </motion.div>
 
         <motion.div variants={fadeUp} custom={3} className="description-box mb-8">
-          <h5>Selected Package:</h5>
+          <h5>{t('rates.selected_package')}</h5>
           <p>
-            {selectedPackage?.description.split('\n').map((line, index) => (
+            {selectedPackage && t(selectedPackage.descKey).split('\n').map((line, index) => (
               <React.Fragment key={index}>
                 {line.trim()}
                 <br />
@@ -183,18 +145,18 @@ export default function Rates() {
             className="text-white mb-4"
             style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}
           >
-            Add Extras
+            {t('rates.add_extras')}
           </motion.h3>
           <div className="shimmer-line mb-5" />
           <motion.div variants={fadeUp} custom={1} className="flex flex-wrap gap-2">
-            {extraOptions.map((extra, index) => (
+            {extraOptions.map((extra) => (
               <button
-                key={index}
-                className={`rate-button ${extras.some((e) => e.label === extra.label) ? 'checked' : ''} ${lockedExtras.some((e) => e.label === extra.label) ? 'locked' : ''}`}
+                key={extra.key}
+                className={`rate-button ${extras.some((e) => e.key === extra.key) ? 'checked' : ''} ${lockedExtras.some((e) => e.key === extra.key) ? 'locked' : ''}`}
                 onClick={() => toggleExtra(extra)}
-                disabled={lockedExtras.some((e) => e.label === extra.label)}
+                disabled={lockedExtras.some((e) => e.key === extra.key)}
               >
-                <span>{`${extra.label} +€${extra.price}`}</span>
+                <span>{`${t(`rates.extras.${extra.key}`)} +€${extra.price}`}</span>
               </button>
             ))}
           </motion.div>
@@ -215,16 +177,15 @@ export default function Rates() {
           <button
             className="whatsapp-button"
             onClick={() => {
-              // @ts-ignore
-              const stripEmojis = (text) => text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
-              const cleanLabel = selectedPackage ? stripEmojis(selectedPackage.label) : '';
-              const extrasList = extras.map((e) => stripEmojis(e.label)).join(', ') || 'No extras selected';
-              const message = `Hi Danny! I'm interested in your ${cleanLabel}. Selected extras: ${extrasList}. Total price: €${calculateTotal()}.`;
+              const stripEmojis = (text: string) => text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
+              const cleanLabel = selectedPackage ? stripEmojis(t(selectedPackage.labelKey)) : '';
+              const extrasList = extras.map((e) => stripEmojis(t(`rates.extras.${e.key}`))).join(', ') || t('rates.no_extras');
+              const message = t('rates.whatsapp_message', { package: cleanLabel, extras: extrasList, total: calculateTotal() });
               window.open(`https://wa.me/34615193280?text=${encodeURIComponent(message)}`, '_blank');
             }}
           >
             <img src={whatsappIcon} alt="WhatsApp Icon" style={{ width: '32px', height: '32px', marginRight: '15px' }} />
-            Get in contact with me through WhatsApp
+            {t('rates.whatsapp_cta')}
           </button>
         </motion.div>
       </motion.div>
