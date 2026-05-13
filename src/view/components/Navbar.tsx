@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { CircleFlag } from 'react-circle-flags';
 import { FaHome } from "react-icons/fa";
+import enFlag from '../../assets/EN.png';
+import esFlag from '../../assets/SP.png';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -27,9 +28,11 @@ export default function Navbar() {
         onClick={toggleLanguage}
         title={isEnglish ? 'Switch to Spanish' : 'Switch to English'}
       >
-        <span style={{ display: 'inline-flex', width: '16px', height: '16px', flexShrink: 0 }}>
-          <CircleFlag countryCode={isEnglish ? 'gb' : 'es'} />
-        </span>
+        <img
+          src={isEnglish ? enFlag : esFlag}
+          alt={isEnglish ? 'English' : 'Spanish'}
+          style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+        />
         <span>{isEnglish ? 'EN' : 'ES'}</span>
       </button>
     </nav>
