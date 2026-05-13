@@ -7,16 +7,17 @@ interface CardProps {
 }
 
 export default function Card({ title, description, link }: CardProps) {
+  const titleId = `card-title-${title.toLowerCase().replace(/\s+/g, '-')}`;
   return (
     <motion.article
       className="card"
       tabIndex={0}
-      aria-labelledby={`card-title-${title}`}
+      aria-labelledby={titleId}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
     >
       <div className="card__content flex flex-col h-full">
-        <h2 id={`card-title-${title}`} className="card__title">{title}</h2>
+        <h2 id={titleId} className="card__title">{title}</h2>
         <p className="card__description flex-1">{description}</p>
         {link && (
           <a

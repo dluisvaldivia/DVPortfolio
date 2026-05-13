@@ -100,7 +100,9 @@ const AccessibilityChecker = () => {
             </div>
 
             <div className="ac-input-group">
+                <label htmlFor="site-url" className="sr-only">Website URL to check</label>
                 <input
+                    id="site-url"
                     type="text"
                     placeholder="https://example.com"
                     value={url}

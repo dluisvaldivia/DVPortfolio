@@ -12,8 +12,8 @@ export default function Navbar() {
 
   return (
     <nav className="nav-wrapper flex w-full items-center">
-      <Link to="/" className="nav-item" onClick={() => window.scrollTo(0, 0)}>
-        <FaHome style={{ fontSize: '1.25rem' }} />
+      <Link to="/" className="nav-item" aria-label="Home" onClick={() => window.scrollTo(0, 0)}>
+        <FaHome style={{ fontSize: '1.25rem' }} aria-hidden="true" />
       </Link>
 
       <Link to="/free-tools/accessibility-checker" className="nav-item" onClick={() => window.scrollTo(0, 0)}>

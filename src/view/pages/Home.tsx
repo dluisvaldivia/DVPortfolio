@@ -113,7 +113,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
             className="text-base md:text-lg"
-            style={{ color: 'rgba(232,232,240,0.45)' }}
+            style={{ color: '#ffffff' }}
           >
             {t('hero.tagline2')}
           </motion.p>
@@ -187,7 +187,9 @@ export default function Home() {
           <motion.div variants={fadeUp} custom={1} className="w-full md:w-[560px]">
             <form target="_blank" action="https://formsubmit.co/dluis.valdivia@gmail.com" method="POST">
               <div className="flex gap-4 mb-4">
+                <label htmlFor="contact-name" className="sr-only">Your Name</label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="name"
                   placeholder="Your Name"
@@ -201,7 +203,9 @@ export default function Home() {
                   onFocus={e => { e.currentTarget.style.borderColor = '#00674F'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,103,79,0.15)'; }}
                   onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'; e.currentTarget.style.boxShadow = 'none'; }}
                 />
+                <label htmlFor="contact-email" className="sr-only">Email Address</label>
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
                   placeholder="Email Address"
@@ -216,7 +220,9 @@ export default function Home() {
                   onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'; e.currentTarget.style.boxShadow = 'none'; }}
                 />
               </div>
+              <label htmlFor="contact-message" className="sr-only">Your Message</label>
               <textarea
+                id="contact-message"
                 name="message"
                 placeholder="Your Message"
                 rows={7}
@@ -254,7 +260,7 @@ export default function Home() {
         <div className="mt-16 mb-4">
           <p
             className="text-center text-xs uppercase tracking-widest mb-8"
-            style={{ color: 'rgba(232,232,240,0.35)' }}
+            style={{ color: '#ffffff' }}
           >
             or find me on
           </p>
