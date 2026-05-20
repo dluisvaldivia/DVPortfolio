@@ -102,21 +102,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
-            className="text-xl md:text-2xl font-light tracking-widest uppercase mb-3"
-            style={{ color: '#ffffff', letterSpacing: '0.2em' }}
+            className="text-xl md:text-2xl font-light mb-3"
+            style={{ color: '#ffffff' }}
           >
             {t('hero.tagline1')}
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
-            className="text-base md:text-lg"
-            style={{ color: '#ffffff' }}
-          >
-            {t('hero.tagline2')}
-          </motion.p>
         </DataGridHero>
       </motion.div>
 

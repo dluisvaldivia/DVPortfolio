@@ -15,8 +15,8 @@ const resources = {
             },
             "hero": {
                 "name": "Danny Valdivia",
-                "tagline1": "Simple. Intuitive. Effective.",
-                "tagline2": "Simplifying complex structures for humans."
+                "tagline1": "Full Stack Developer | UI/UX & Accessibility Expert | AI-Accelerated Solutions | Business Analyst",
+                "tagline2": ""
             },
             "about": {
                 "reducing_friction_title": "Reducing Friction",
@@ -77,8 +77,8 @@ const resources = {
             },
             "hero": {
                 "name": "Danny Valdivia",
-                "tagline1": "Simple. Intuitivo. Efectivo.",
-                "tagline2": "Simplificando estructuras complejas para humanos."
+                "tagline1": "Desarrollador Full Stack | Experto en UI/UX & Accesibilidad | Soluciones con IA | Analista de Negocio",
+                "tagline2": ""
             },
             "about": {
                 "reducing_friction_title": "Reduciendo la Fricción",
