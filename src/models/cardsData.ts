@@ -20,8 +20,8 @@ export const cardsData: Card[] = [
   },
   {
     id: 3,
-    title: "So Divergent",
-    description: "Coaching site for ADHD individuals.",
+    title: "SO DIVERGENT",
+    description: "Interactive site simulating the limitations and strengths of neurodivergent individuals.",
     link: "https://www.thatsveryadhd.com/"
   },
   {

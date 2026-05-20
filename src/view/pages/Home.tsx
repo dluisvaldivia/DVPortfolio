@@ -150,7 +150,7 @@ export default function Home() {
             background: 'linear-gradient(135deg, rgba(0,103,79,0.07) 0%, rgba(34,34,247,0.05) 100%)',
           }}
         />
-        <div className="relative z-10 p-8">
+        <div className="relative z-10 p-4 sm:p-6 md:p-8">
           <motion.h2
             variants={fadeUp}
             id="projects"
@@ -186,7 +186,7 @@ export default function Home() {
         <div className="flex justify-center">
           <motion.div variants={fadeUp} custom={1} className="w-full md:w-[560px]">
             <form target="_blank" action="https://formsubmit.co/dluis.valdivia@gmail.com" method="POST">
-              <div className="flex gap-4 mb-4">
+              <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <label htmlFor="contact-name" className="sr-only">Your Name</label>
                 <input
                   id="contact-name"
@@ -277,7 +277,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.45, ease: 'easeOut' }}
-                className="flex items-center gap-4 px-6 py-4 min-w-[180px]"
+                className="flex items-center gap-4 px-6 py-4 w-full sm:w-auto sm:min-w-[180px]"
                 style={{
                   background: '#111118',
                   border: '1px solid rgba(255,255,255,0.1)',

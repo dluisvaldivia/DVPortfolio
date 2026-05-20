@@ -49,6 +49,7 @@
     body {
         @apply font-sans m-0 min-h-screen flex flex-col bg-background text-foreground;
         background-color: #0a0a0f;
+        overflow-x: hidden;
     }
 
     body::before {
@@ -80,6 +81,7 @@
     }
   html {
     @apply font-sans;
+    overflow-x: hidden;
     }
 }
 
@@ -132,6 +134,36 @@
     .nav-item:focus { outline: none; color: #fff; }
     .nav-item:focus::after { transform: translateX(-50%) scaleX(1); }
 
+    /* ── Mobile nav menu ── */
+    .mobile-menu {
+        background: rgba(10, 10, 15, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        overflow: hidden;
+    }
+
+    .mobile-menu .nav-item {
+        @apply flex-none w-full h-[52px] justify-start px-6;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        letter-spacing: 0.04em;
+    }
+
+    .mobile-menu .nav-item::after {
+        left: 0;
+        transform: translateX(0) scaleX(0);
+        width: 3px;
+        height: 50%;
+        top: 25%;
+        bottom: auto;
+        border-radius: 2px;
+    }
+
+    .mobile-menu .nav-item:hover::after,
+    .mobile-menu .nav-item:focus::after {
+        transform: translateX(0) scaleX(1);
+    }
+
     /* ── Buttons ── */
     .button-primary {
         @apply border-none rounded-xl px-5 py-2.5 text-sm font-semibold;
@@ -178,7 +210,7 @@
 
     .cards-container {
         @apply grid gap-5 p-2;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     }
 
     /* ── BackToTop ── */
@@ -222,6 +254,15 @@
         border: 1px solid rgba(0, 103, 79, 0.4);
         backdrop-filter: blur(14px);
         color: #e8e8f0;
+    }
+
+    @media (max-width: 639px) {
+        #floating-total {
+            left: 1rem;
+            right: 1rem;
+            text-align: center;
+            font-size: clamp(1.5rem, 7vw, 2.5rem);
+        }
     }
 
     .tier-button, .rate-button {
@@ -275,7 +316,7 @@
 
     /* ── Accessibility Checker ── */
     .accessibility-checker-container {
-        @apply p-8 max-w-[900px] mx-auto text-center min-h-[80vh];
+        @apply w-full max-w-[900px] mx-auto text-center;
     }
 
     .ac-description {
@@ -302,7 +343,7 @@
     }
 
     .ac-input-group {
-        @apply flex gap-3 justify-center mb-8;
+        @apply flex flex-col sm:flex-row gap-3 justify-center mb-8;
         padding: 1.25rem 1.5rem;
         background: linear-gradient(135deg, rgba(0, 103, 79, 0.08) 0%, rgba(34, 34, 247, 0.08) 100%);
         border: 1px solid transparent;
