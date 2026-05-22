@@ -93,7 +93,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="h1hero gradient-text font-black tracking-tight mb-5"
+            className="h1hero gradient-text font-bold tracking-tight mb-5 text-left w-fit mx-10 px-10"
+            style={{ fontFamily: "'Zen Dots', sans-serif", textTransform: 'uppercase' }}
           >
             {t('hero.name')}
           </motion.h1>
