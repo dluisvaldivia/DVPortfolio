@@ -27,8 +27,14 @@ const resources = {
                 "strategic_optimization_desc": "Trimming technical and process \"noise\" to maximize project efficacy and team velocity."
             },
             "headings": {
-                "projects": "Projects",
+                "projects": "Work & Projects",
                 "contact": "Contact me"
+            },
+            "cards": {
+                "1": { "title": "Bloom", "description": "Growth hacking platform." },
+                "2": { "title": "YogaBuddy", "description": "Yoga companion app for kids." },
+                "3": { "title": "SO DIVERGENT", "description": "Interactive site simulating the limitations and strengths of neurodivergent individuals." },
+                "4": { "title": "ExpenseVue", "description": "Expense management application with integration to banking data." }
             },
             "accessibility_checker": {
                 "title": "Accessibility Checker",
@@ -91,6 +97,12 @@ const resources = {
             "headings": {
                 "projects": "Proyectos",
                 "contact": "Contáctame"
+            },
+            "cards": {
+                "1": { "title": "Bloom", "description": "Plataforma de growth hacking." },
+                "2": { "title": "YogaBuddy", "description": "App de yoga para niños." },
+                "3": { "title": "SO DIVERGENT", "description": "Sitio interactivo que simula las limitaciones y fortalezas de personas neurodivergentes." },
+                "4": { "title": "ExpenseVue", "description": "Aplicación de gestión de gastos con integración a datos bancarios." }
             },
             "accessibility_checker": {
                 "title": "Comprobador de Accesibilidad",

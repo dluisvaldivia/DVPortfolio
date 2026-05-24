@@ -1,22 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useRef, useCallback } from "react";
 
-/**
- * A generative hero component with animated grid background.
- *
- * Props:
- * - rows: number of rows
- * - cols: number of columns
- * - spacing: gap between cells (px)
- * - duration: animation duration (s)
- * - color: cell color (CSS string)
- * - animationType: "pulse" | "wave" | "random"
- * - pulseEffect: enable pulse animation
- * - mouseGlow: enable mouse-follow glow
- * - opacityMin: minimum opacity
- * - opacityMax: maximum opacity
- * - background: container background (CSS string)
- */
+interface DataGridHeroProps {
+  rows: number;
+  cols: number;
+  spacing: number;
+  duration: number;
+  color: string;
+  animationType: "pulse" | "wave" | "random";
+  pulseEffect: boolean;
+  mouseGlow: boolean;
+  opacityMin: number;
+  opacityMax: number;
+  background: string;
+  children?: React.ReactNode;
+}
+
 export default function DataGridHero({
   rows,
   cols,
@@ -30,10 +28,12 @@ export default function DataGridHero({
   opacityMax,
   background,
   children,
-}) {
-  const gridRef = useRef(null);
+}: DataGridHeroProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const cellsRef = useRef<HTMLDivElement[]>([]);
 
-  // Build grid cells on cfg change
+  // Build grid cells
   useEffect(() => {
     const container = gridRef.current;
     if (!container) return;
@@ -42,97 +42,100 @@ export default function DataGridHero({
     container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
     container.style.gap = `${spacing}px`;
-    container.style.setProperty("--mouse-glow-opacity", mouseGlow ? 1 : 0);
 
+    cellsRef.current = [];
     const total = rows * cols;
-    const centerRow = Math.floor(rows / 2);
-    const centerCol = Math.floor(cols / 2);
 
     for (let i = 0; i < total; i++) {
       const cell = document.createElement("div");
       cell.className = "grid-cell";
       cell.style.backgroundColor = color;
-      cell.style.setProperty("--opacity-min", opacityMin);
-      cell.style.setProperty("--opacity-max", opacityMax);
+      cell.style.setProperty("--opacity-min", String(opacityMin));
+      cell.style.setProperty("--opacity-max", String(opacityMax));
+      container.appendChild(cell);
+      cellsRef.current.push(cell);
+    }
+  }, [rows, cols, spacing, color, opacityMin, opacityMax, mouseGlow]);
 
-      if (pulseEffect) {
-        let delay;
+  const triggerRipple = useCallback(
+    (originRow: number, originCol: number) => {
+      const cells = cellsRef.current;
+      if (!cells.length) return;
+
+      cells.forEach((cell, i) => {
         const r = Math.floor(i / cols);
         const c = i % cols;
+        const dist = Math.sqrt((r - originRow) ** 2 + (c - originCol) ** 2);
+        const delay = dist * 0.06;
 
-        if (animationType === "wave") {
-          delay = (r + c) * 0.1;
-        } else if (animationType === "random") {
-          delay = Math.random() * duration;
-        } else {
-          const dr = Math.abs(r - centerRow);
-          const dc = Math.abs(c - centerCol);
-          delay = Math.sqrt(dr * dr + dc * dc) * 0.2;
-        }
+        cell.style.animation = "none";
+        void cell.offsetWidth;
+        cell.style.animation = `ripple-flash ${duration * 0.6}s ${delay.toFixed(3)}s ease-out forwards`;
+      });
+    },
+    [cols, duration]
+  );
 
-        cell.style.animation = `cell-pulse ${duration}s infinite alternate`;
-        cell.style.animationDelay = `${delay.toFixed(3)}s`;
+  // Auto-ripple loop
+  useEffect(() => {
+    if (!pulseEffect) return;
+
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const fire = () => {
+      let originRow: number;
+      let originCol: number;
+
+      if (animationType === "wave") {
+        originRow = 0;
+        originCol = 0;
+      } else if (animationType === "random") {
+        originRow = Math.floor(Math.random() * rows);
+        originCol = Math.floor(Math.random() * cols);
+      } else {
+        originRow = Math.floor(rows / 2);
+        originCol = Math.floor(cols / 2);
       }
 
-      container.appendChild(cell);
-    }
-  }, [
-    rows,
-    cols,
-    spacing,
-    color,
-    animationType,
-    pulseEffect,
-    duration,
-    opacityMin,
-    opacityMax,
-    mouseGlow,
-  ]);
-
-  // Mouse-follow glow
-  useEffect(() => {
-    if (!mouseGlow || !gridRef.current) return;
-    const handler = (e) => {
-      const rect = gridRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      gridRef.current.style.setProperty("--mouse-x", `${x}px`);
-      gridRef.current.style.setProperty("--mouse-y", `${y}px`);
+      triggerRipple(originRow, originCol);
+      timeoutId = setTimeout(fire, duration * 1000 + 800);
     };
-    window.addEventListener("mousemove", handler);
-    return () => window.removeEventListener("mousemove", handler);
-  }, [mouseGlow]);
+
+    fire();
+    return () => clearTimeout(timeoutId);
+  }, [pulseEffect, animationType, rows, cols, duration, triggerRipple]);
+
+  // Mouse glow + click-to-ripple
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const grid = gridRef.current;
+    if (!wrapper || !grid) return;
+
+    const handleClick = (e: MouseEvent) => {
+      const rect = grid.getBoundingClientRect();
+      const cellW = rect.width / cols;
+      const cellH = rect.height / rows;
+      const col = Math.floor((e.clientX - rect.left) / cellW);
+      const row = Math.floor((e.clientY - rect.top) / cellH);
+      triggerRipple(
+        Math.max(0, Math.min(rows - 1, row)),
+        Math.max(0, Math.min(cols - 1, col))
+      );
+    };
+
+    wrapper.addEventListener("click", handleClick);
+
+    return () => {
+      wrapper.removeEventListener("click", handleClick);
+    };
+  }, [cols, rows, triggerRipple]);
 
   return (
-    <div className="data-grid-hero" style={{ background }}>
-      <div
-        ref={gridRef}
-        className="grid-container"
-        aria-hidden="true"
-      />
-      <div
-        className="hero-content"
-        role="region"
-        aria-label="Hero Content"
-      >
+    <div ref={wrapperRef} className="data-grid-hero" style={{ background }}>
+      <div ref={gridRef} className="grid-container" aria-hidden="true" />
+      <div className="hero-content" role="region" aria-label="Hero Content">
         {children}
       </div>
     </div>
   );
 }
-
-DataGridHero.propTypes = {
-  rows: PropTypes.number.isRequired,
-  cols: PropTypes.number.isRequired,
-  spacing: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
-  animationType: PropTypes.oneOf(["pulse", "wave", "random"])
-    .isRequired,
-  pulseEffect: PropTypes.bool.isRequired,
-  mouseGlow: PropTypes.bool.isRequired,
-  opacityMin: PropTypes.number.isRequired,
-  opacityMax: PropTypes.number.isRequired,
-  background: PropTypes.string.isRequired,
-  children: PropTypes.node,
-};

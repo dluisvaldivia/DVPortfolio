@@ -1,15 +1,17 @@
 
+import { useTranslation } from 'react-i18next';
 import Card from "./card";
 import { cardsData } from "../../models/cardsData";
 
 const CardsList = () => {
+  const { t } = useTranslation();
   return (
     <div className="cards-container">
       {cardsData.map((card) => (
         <Card
           key={card.id}
-          title={card.title}
-          description={card.description}
+          title={t(`cards.${card.id}.title`)}
+          description={t(`cards.${card.id}.description`)}
           link={card.link}
         />
       ))}

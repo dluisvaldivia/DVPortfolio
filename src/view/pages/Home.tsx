@@ -245,6 +245,9 @@ export default function Home() {
                 Send Message
               </button>
             </form>
+            <p className="mt-4 text-center text-xs" style={{ color: '#ffffff' }}>
+              Your data is used solely to respond to your message and will never be shared with third parties.
+            </p>
           </motion.div>
         </div>
 
